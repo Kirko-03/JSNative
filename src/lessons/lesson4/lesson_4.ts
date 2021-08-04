@@ -1,32 +1,45 @@
-console.log('lesson 4');
+console.log("lesson 4");
 
 // http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
 // https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
 
-
 // Task 01
 // Создайте промис, который постоянно находиться в состоянии pending.
 // В конструкторе промиса выведите в консоль сообщение "Promise is created".
+// let promise = new Promise(()=>{
 
+// })
+// console.log(promise);
 
 // Task 02
 // Создайте промис, который после создания сразу же переходит в состояние resolve
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
-
+// let promise = new Promise((res)=>{
+// res(console.log('Promise Data'));
+// })
+// console.log(promise);
 
 // Task 03
 // Создайте промис, который после создания сразу же переходит в состояние rejected
 // и возвращает строку 'Promise Error'
 // Получите данные промиса и выведите их в консоль
-
+// let promise = new Promise((res,rej)=>{
+//     rej(console.log('Promise Error'));
+//     })
+//     console.log(promise);
 
 // Task 04
 // Создайте промис, который переходит в состояние resolved через 3с.
 // (Используйте setTimeout)
 // и возвращает строку 'Promise Data'
 // Получите данные промиса и выведите их в консоль
-
+// let promise = new Promise((res)=>{
+//     setTimeout(()=>res(console.log('Promise Data')),3000);
+// })
+// setTimeout(()=>{
+//     console.log(promise);
+// },4000)
 
 // Task 05
 // Создайте литерал объекта handlePromise со следующими свойствами:
@@ -40,23 +53,81 @@ console.log('lesson 4');
 // описаного выше объекта: свойство promise получает новый созданный промис,
 // свойства resolve и reject получают ссылки на соответствующие функции
 // resolve и reject. Следующие два обработчика запускают методы resolve и reject.
+type handlePromiseType = {
+  promise: null | Promise<any>;
+  resolve: null | Function;
+  reject: null | Function;
+  onSuccess: (paramName: string) => void;
+  onError: (paramName: string) => void;
+};
 
+let handlePromise: handlePromiseType = {
+  promise: null,
+  resolve: null,
+  reject: null,
+  onSuccess: (paramName: string) => {
+    console.log(`Promise is resolved with error: ${paramName}`);
+  },
+  onError: (paramName: string) => {
+    console.log(`Promise is rejected with error: ${paramName}`);
+  },
+};
+export function createPromise() {
+  let somePromise: Promise<any> = new Promise((res, rej) => {
+    handlePromise.resolve = res;
+    handlePromise.reject = rej;
+  });
+  handlePromise.promise = somePromise;
+  handlePromise.promise
+    .then(handlePromise.onSuccess)
+    .catch(handlePromise.onError);
+}
 
+export function resolvedPromise() {
+  handlePromise.resolve && handlePromise.resolve("1");
+}
+export function rejectedPromise() {
+  handlePromise.reject && handlePromise.reject("0");
+}
 // Task 06
 // Создайте промис, который через 1 с возвращает строку "My name is".
 // Создайте функцию onSuccess, которая получает один параметр,
 // прибавляет к нему Ваше имя и возвращает новую строку из функции
 // Создайте функцию print, которая выводит в консоль значение своего параметра
 // Добавьте два метода then и передайте созданные функции.
-
-
+let promise = new Promise((res, rej) => {
+  setTimeout(() => {
+    res("My name is");
+  }, 1000);
+});
+function onSuccess(param: any) {
+  return param + " Kirill";
+}
+function print(props: any) {
+  console.log(props);
+}
+promise.then((res) => onSuccess(res)).then((success) => print(success));
 // Task 7
 // Создайте три промиса. Первый промис возвращает объект { name: "Anna" } через 2с,
 // второй промис возвращает объект {age: 16} через 3 с, а третий {city: ''} через 4с.
 // Получите результаты работы промисов, объедините свойства объектов
 // и выведите в консоль {name, age, city}
-
-
+let annProm = new Promise((res) => {
+  setTimeout(() => {
+    res({ name: "Anna" });
+  }, 2000);
+});
+let ageProm = new Promise((res) => {
+  setTimeout(() => {
+    res({ age: 16 });
+  }, 2000);
+});
+let cityProm = new Promise((res) => {
+  setTimeout(() => {
+    res({ city: "" });
+  }, 2000);
+});
+Promise.all([annProm, ageProm, cityProm]).then(res=>console.log(res))
 
 // just a plug
-export default ()=>{};
+export default () => {};
