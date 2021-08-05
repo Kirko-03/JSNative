@@ -28,13 +28,17 @@ console.log('Lesson 5');
 type someObjType = {
     name: string;
     age: number;
+    greeting:()=>void
 }
 
 let someObj:someObjType = {
     name: 'Eugene',
-    age: 32
+    age: 32,
+    greeting(){
+        return `My name is ${this.name}. I am ${this.age}`
+    }
 }
-
+console.log(someObj.greeting())
 // Task 02
 // реализовать счетчик counter в виде объекта со следующими методами:
 // get current count; - выводит текущее значение счетчика
@@ -43,19 +47,96 @@ let someObj:someObjType = {
 // set current count; - принимает и присваивает значение счетчику
 // rest current count - устанавливает значение счетчика равным 0
 // все методы должны ссылаться на сам объект
+type CounterType = {
+    value:number
+    getCurrentCount:()=>void
+    increment:()=>void
+    decrement:()=>void
+    setCurrentCount:(count:number)=>void
+    restCurrentCount:()=>void
+}
+let counter:CounterType = {
+    value:5,
+     getCurrentCount(){
+     return this.value
+     },
+     increment(){
+       return ++this.value
+     },
+     decrement(){
+        return --this.value
+     },
+     setCurrentCount(count:number){
+        return this.value = count
+     },
+     restCurrentCount(){
+        return this.value=0
+     }
+}
+console.log(counter.decrement());
+console.log(counter.getCurrentCount());
+console.log(counter.increment());
+console.log(counter.restCurrentCount());
+console.log(counter.setCurrentCount(10));
+
 
 // Task 03
 // переделайте код из Task 02, что бы сработал следующий код:
 // counter.setCurrentCount(10).increment().increment().increment().decrement().getCurrentCount() // 12
 
+type CounterTask3Type = {
+    value:number
+    getCurrentCount:()=>void
+    increment:()=>CounterTask3Type
+    decrement:()=>CounterTask3Type
+    setCurrentCount:(count:number)=>CounterTask3Type
+    restCurrentCount:()=>void
+}
+
+let counterTask3:CounterTask3Type = {
+    value:5,
+     getCurrentCount(){
+        // console.log(this.value);
+     return this.value && this
+     },
+     increment(){
+       ++this.value
+       return this 
+     },
+     decrement(){
+        --this.value
+        return this
+     },
+     setCurrentCount(count:number){
+         this.value = count
+         return this 
+     },
+     restCurrentCount(){
+         this.value=0
+         return this
+        }
+}
+counterTask3.setCurrentCount(10).increment().increment().increment().decrement().getCurrentCount()
 // Task 04
 // Написать функцию конструктор myFirstConstructorFunc которая принимает 2 параметра name и age и возвращает объект
 // у которого будут эти свойства и метод greeting из Task 01
 
+function myFirstConstructorFunc(name:string,age:number){
+  return {
+      name,
+      age,
+      greeting(){
+        return `My name is ${this.name}. I am ${this.age}`
+    }
+  }
+}
+console.log(myFirstConstructorFunc('Kirill',17));
+  
 // Task 05 есть 2 объекта One и Two. С помощью bind и метода sayHello заставьте поздороваться объект One
 
 let One = {name: 'One'};
 let Two = {name: 'Two', sayHello: function() {console.log(`Hello, my name is ${this.name}`)}};
+console.log(Two.sayHello.bind(One)())
 
 // Task 06
 // создайте объект helperObj у которого есть следующие методы:
@@ -63,7 +144,24 @@ let Two = {name: 'Two', sayHello: function() {console.log(`Hello, my name is ${t
 // setAge - устанавливает полученное значение в свойство age объекта
 // greeting - используется функция sayHello из Task 05
 // можно использовать @ts-ignore
-
+let helperObj = {
+    name:'Kirill',
+    age:17,
+    changeName(name:string){
+this.name = name
+return this
+},
+    setAge(age:number){
+this.age = age
+return this
+    },
+    greeting(){
+        let sayHello = () => {console.log(`Hello, my name is ${this.name}.I am ${this.age}`)}
+        return sayHello()
+    }
+}
+console.log(helperObj.setAge(18).changeName('Dimka').greeting());
+ 
 // Bind
 // 1) Дана функция sumTwoNumbers, реализовать функцию bindNumber которая принимает функцию sumTwoNumbers и число, и
 // возвращает другую функцию, которое также принимает число и возвращает сумму этих чисел. Замыкание использовать нельзя
