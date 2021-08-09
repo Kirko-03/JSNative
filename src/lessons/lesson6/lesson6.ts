@@ -86,26 +86,26 @@ Student.printGoodStudents(arrayStudents);
 // Создать класс с двумя переменными. Добавить конструктор с входными параметрами и инициализирующий члены класса по умолчанию.
 // Можно ли создать метод на экземпляре класса который будет удалять сам экземпляр класса?
 // Можно ли создать метод класса который будет удалять экземпляр класса?
-// interface IClass{
-//     oneParam:string
-//     twoParam:number
-// }
-// class Class implements IClass {
-//     constructor(public oneParam:string,public twoParam:number){
-// this.oneParam = oneParam
-// this.twoParam = twoParam
-//     }
-// static deleteMeth(Class:IClass){
-//     //@ts-ignore
+interface IClass{
+    oneParam:string
+    twoParam:number
+}
+class Class implements IClass {
+    constructor(public oneParam:string,public twoParam:number){
+this.oneParam = oneParam
+this.twoParam = twoParam
+    }
+ deleteMeth(Class:IClass){
+    //@ts-ignore
+ Class = null
+ return null
+}
+}
+let resClass = new Class("L",7)
 
-// }
-// }
-// let resClass = new Class("L",7)
-
-// console.log(resClass);
-// //@ts-ignore
-// Class.deleteMeth(Class)
-// console.log(Class);
+resClass.deleteMeth(resClass)
+console.log(Class);
+console.log(resClass);
 
 // Task 03
 // Составить описание класса для представления времени. Предусмотреть возможности установки времени и изменения его отдельных
@@ -113,6 +113,8 @@ Student.printGoodStudents(arrayStudents);
 // Создать методы изменения времени на заданное количество часов, минут и секунд.
 // Создать метод выводящий время в строке формата HH:MM:SS
 // Создать класс по вышеуказанному описанию
+
+
 
 // Task 04
 // Класс Покупатель: Фамилия, Имя, Адрес, Номер банковского счета;
