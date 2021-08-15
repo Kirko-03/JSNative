@@ -1,4 +1,4 @@
-console.log('Lesson 7');
+console.log("Lesson 7");
 
 // __Proto__
 // https://learn.javascript.ru/prototype-inheritance
@@ -9,46 +9,41 @@ console.log('Lesson 7');
 // https://learn.javascript.ru/function-prototype
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype
 
-
 // https://www.youtube.com/watch?v=aQkgUUmUJy4&t=21s
 // https://www.youtube.com/watch?v=b55hiUlhAzI
-
 
 //Task 01
 // Реализовать класс Animal который принимает name(по умолчанию 'Animal') в качестве параметра, у которого будет 3
 // метода walk, eat, sleep - каждый метод должен выводить в консоль строку имя + действие. Пример:
 // walk => `${this.name} walking`
 // проверить, что методы работают
-interface IAnimal{
-    name?:string
+interface IAnimal {
+  name?: string;
 }
 
-class Animal implements IAnimal {   
-    name:string
+class Animal implements IAnimal {
+  name: string;
 
-    constructor( name?:string){ 
-        this.name = "Animal"
-        if(name){
-     this.name  = name
-        }
+  constructor(name?: string) {
+    this.name = "Animal";
+    if (name) {
+      this.name = name;
     }
-    walk(){
-        console.log(`${this.name} walking`);
-         
-    }
-    eat(){
-        console.log(`${this.name} eat`);
+  }
+  walk() {
+    console.log(`${this.name} walking`);
+  }
+  eat() {
+    console.log(`${this.name} eat`);
+  }
+  sleep() {
+    console.log(`${this.name} sleep`);
+  }
+}
 
-    }
-    sleep(){
-        console.log(`${this.name} sleep`);
+let rabbit = new Animal("Krol");
 
-    }
-    }
-
-let rabbit = new Animal('Krol')
-
-rabbit.eat()
+rabbit.eat();
 rabbit.sleep();
 rabbit.walk();
 
@@ -57,54 +52,63 @@ rabbit.walk();
 // параметра, реализовать методы roar и climb аналогично классу Animal
 // проверить, что все методы работают
 
-class Monkey extends Animal{
-    constructor(name?:string){
-super(name)
-this.name = 'Monkey'
-if(name){
-    this.name  = name
-       }
+class Monkey extends Animal {
+  constructor(name?: string) {
+    super(name);
+    this.name = "Monkey";
+    if (name) {
+      this.name = name;
     }
-    roar(){
-        console.log(`${this.name} roar`);
-    }
-    climb(){
-        console.log(`${this.name} climb`);
-        
-    }
+  }
+  roar() {
+    console.log(`${this.name} roar`);
+  }
+  climb() {
+    console.log(`${this.name} climb`);
+  }
 }
-let KingKong = new Monkey()
-KingKong.climb()
+let KingKong = new Monkey();
+KingKong.climb();
 //Task 03
 // Реализовать класс Human на базе класса Monkey, конструктор принимает name(по умолчанию 'Human') в качестве
 // параметра, реализовать методы speak и think аналогично классу Animal
 // проверить, что все методы работают
-class Human extends Monkey{
-    constructor(name?:string){
-super(name)
-this.name = 'Human'
-if(name){
-    this.name  = name
-       }
+class Human extends Monkey {
+  constructor(name?: string) {
+    super(name);
+    this.name = "Human";
+    if (name) {
+      this.name = name;
     }
-    speak(){
-        console.log(`${this.name} speak`);
-    }
-    think(){
-        console.log(`${this.name} think`);
-        
-    }
+  }
+  speak() {
+    console.log(`${this.name} speak`);
+  }
+  think() {
+    console.log(`${this.name} think`);
+  }
 }
-let Dimik = new Human('Dimik')
-Dimik.speak()
+let Dimik = new Human("Dimik");
+Dimik.speak();
 
 // Task 04
 // Реализовать таски 01-03 через функции конструкторы в отдельном JS файле, реализовать наследование
 
-
 // Task 05
 // Используя метод Apply реализовать свой собственный метод bind
+function sum(...rest:Array<number>) {
+      return  rest.reduce((acc,el)=>acc+el)
+    }
 
+function myBind(func:Function,arg:Array<number>) {
+    //@ts-ignore
+ let _this = this
+ return function (){
+ return func.apply(_this,arg)
+ }
+}
+
+console.log(myBind(sum,[2,5,6,7])());
 
 // just a plug
 export default () => {};
